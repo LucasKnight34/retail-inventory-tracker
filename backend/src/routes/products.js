@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const db = require('../db');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -121,7 +122,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', createValidation, async (req, res, next) => {
+router.post('/', auth, createValidation, async (req, res, next) => {
   try {
     const { name, sku, category_id, price, quantity = 0, low_stock_threshold = 10, description } = req.body;
 
@@ -145,7 +146,7 @@ router.post('/', createValidation, async (req, res, next) => {
   }
 });
 
-router.put('/:id', updateValidation, async (req, res, next) => {
+router.put('/:id', auth, updateValidation, async (req, res, next) => {
   try {
     const { id } = req.params;
     const fields = ['name', 'sku', 'category_id', 'price', 'quantity', 'low_stock_threshold', 'description'];
@@ -191,7 +192,7 @@ router.put('/:id', updateValidation, async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', auth, async (req, res, next) => {
   try {
     const result = await db.query('DELETE FROM products WHERE id = $1 RETURNING id', [req.params.id]);
 

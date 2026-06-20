@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const db = require('../db');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -47,7 +48,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', categoryValidation, async (req, res, next) => {
+router.post('/', auth, categoryValidation, async (req, res, next) => {
   try {
     const { name, description } = req.body;
 
@@ -69,7 +70,7 @@ router.post('/', categoryValidation, async (req, res, next) => {
   }
 });
 
-router.put('/:id', categoryValidation, async (req, res, next) => {
+router.put('/:id', auth, categoryValidation, async (req, res, next) => {
   try {
     const { name, description } = req.body;
 
@@ -97,7 +98,7 @@ router.put('/:id', categoryValidation, async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', auth, async (req, res, next) => {
   try {
     const products = await db.query('SELECT COUNT(*)::int AS count FROM products WHERE category_id = $1', [req.params.id]);
 
