@@ -22,6 +22,9 @@ beforeAll(async () => {
       (4, 'Cordless Drill', 'TLS-DRL-20V', 2, 129.00, 0, 8, 'Brushless cordless drill')
   `);
 
+  await db.query(`SELECT setval('products_id_seq', (SELECT MAX(id) FROM products))`);
+  await db.query(`SELECT setval('categories_id_seq', (SELECT MAX(id) FROM categories))`);
+
   const res = await request(app)
     .post('/api/auth/register')
     .send({ email: 'admin@test.com', password: 'password123' });
