@@ -106,6 +106,8 @@ describe('POST /api/products', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({ name: 'New Product', sku: 'NEW-001', price: 19.99, quantity: 50 });
 
+    console.log('Token value:', token);                              // ADD THIS
+    console.log('POST product response:', res.status, res.body); 
     expect(res.status).toBe(201);
     expect(res.body.name).toBe('New Product');
     expect(res.body.sku).toBe('NEW-001');
