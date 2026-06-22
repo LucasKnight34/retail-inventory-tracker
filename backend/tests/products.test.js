@@ -96,6 +96,7 @@ describe('POST /api/products', () => {
       .post('/api/products')
       .send({ name: 'Test', sku: 'TST-001', price: 9.99 });
 
+    console.log('POST product response:', res.status, res.body); // ADD THIS
     expect(res.status).toBe(401);
   });
 
