@@ -10,8 +10,7 @@ A full-stack inventory management system for a retail hardware store. Built to m
 
 | | URL |
 |---|---|
-| Frontend | https://rit-frontend.onrender.com |
-| Backend API | https://rit-backend.onrender.com |
+| Frontend | [https://rit-frontend.onrender.com](https://retail-inventory-tracker-1.onrender.com) |
 
 > Note: Hosted on Render's free tier. The first request after a period of inactivity may take 30–60 seconds to wake up.
 
