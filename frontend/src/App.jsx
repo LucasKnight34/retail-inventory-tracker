@@ -64,6 +64,50 @@ function ProtectedRoute({ children }) {
 }
 
 function App() {
+  const [serverReady, setServerReady] = useState(false);
+  const [dots, setDots] = useState('');
+
+  useEffect(() => {
+    const dotInterval = setInterval(() => {
+      setDots(d => d.length >= 3 ? '' : d + '.');
+    }, 500);
+
+    const ping = async () => {
+      while (true) {
+        try {
+          await api.healthCheck();
+          setServerReady(true);
+          clearInterval(dotInterval);
+          break;
+        } catch {
+          await new Promise(resolve => setTimeout(resolve, 3000));
+        }
+      }
+    };
+
+    ping();
+    return () => clearInterval(dotInterval);
+  }, []);
+
+  if (!serverReady) {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        gap: '0.75rem',
+        color: '#1e293b'
+      }}>
+        <p style={{ fontSize: '1.25rem', fontWeight: 600 }}>Waking up server{dots}</p>
+        <p style={{ color: '#64748b', fontSize: '0.875rem' }}>
+          Free tier servers sleep after inactivity. Usually takes 20–30 seconds.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <BrowserRouter>
       <AuthProvider>

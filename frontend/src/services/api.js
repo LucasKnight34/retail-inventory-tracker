@@ -25,3 +25,4 @@ export const createCategory = (data) => api.post('/categories', data).then((r) =
 export const login = (email, password) => api.post('/auth/login', { email, password }).then((r) => r.data);
 export const register = (email, password) => api.post('/auth/register', { email, password }).then((r) => r.data);
 export const getCurrentUser = () => api.get('/auth/me').then((r) => r.data);
+export const healthCheck = () => api.get('/health');
